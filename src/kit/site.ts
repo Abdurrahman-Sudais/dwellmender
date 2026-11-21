@@ -14,7 +14,7 @@ export type Site = {
 };
 
 export const SITE: Site = {
-  name: "DwellMender", email: "hello@dwellmender.example", founder: "Ifeoma Eze",
+  name: "DwellMender", email: "ifeoma@dwellmender.space", founder: "Ifeoma Eze",
   orgLabel: "Organisation type", orgTypes: ["Property manager", "Residential accommodation operator", "Commercial facilities team", "Housing association", "Other"],
   useCases: ["Organising tenant complaints", "Duplicate report detection", "Recurring problem detection", "Contractor briefs", "Maintenance reporting", "Other"],
   topics: ["Pilot programme", "Pricing", "Technical / AWS deployment", "Data import and integrations", "Partnership", "Other"],

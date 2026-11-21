@@ -73,7 +73,7 @@ export function ProductPreview() {
           <span className="h-2.5 w-2.5 rounded-full bg-red-300" />
           <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
           <span className="h-2.5 w-2.5 rounded-full bg-sage-300" />
-          <span className="ml-3 text-[11px] text-muted-foreground">app.dwellmender.com / recurring-issues</span>
+          <span className="ml-3 text-[11px] text-muted-foreground">app.dwellmender.space / recurring-issues</span>
         </div>
         <div className="grid gap-3 p-4 sm:grid-cols-3">
           {[
