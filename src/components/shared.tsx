@@ -1,0 +1,259 @@
+import type { ReactNode } from "react";
+import {
+  AlertTriangle,
+  Bug,
+  Building2,
+  Droplets,
+  Flame,
+  Hammer,
+  Home,
+  Image as ImageIcon,
+  Plug,
+  Refrigerator,
+  Sparkles,
+  Thermometer,
+  Wrench,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
+import { Badge } from "@/components/ui/primitives";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/overlays";
+import { cn } from "@/lib/utils";
+import type { IssueCategory, Photo, PhotoKind, Priority, RequestStatus } from "@/data/types";
+
+/* ---------- Brand ---------- */
+export function Logo({ className, light = false }: { className?: string; light?: boolean }) {
+  return (
+    <span className={cn("inline-flex items-center gap-2 font-display text-lg font-bold tracking-tight", light ? "text-white" : "text-navy-900", className)}>
+      <span className={cn("relative grid h-8 w-8 place-items-center rounded-lg", light ? "bg-white/10" : "bg-navy-900")}>
+        <Home className="h-4 w-4 text-warm-100" strokeWidth={2.4} />
+        <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-amber-400 ring-2 ring-white" />
+      </span>
+      DwellMender
+    </span>
+  );
+}
+
+/* ---------- Status / priority ---------- */
+const STATUS_STYLE: Record<RequestStatus, string> = {
+  New: "bg-navy-50 text-navy-700 border-navy-100",
+  "Under Review": "bg-violet-50 text-violet-700 border-violet-200",
+  Assigned: "bg-amber-50 text-amber-700 border-amber-200",
+  "In Progress": "bg-sky-50 text-sky-700 border-sky-200",
+  Resolved: "bg-sage-50 text-sage-700 border-sage-200",
+  Closed: "bg-slate-100 text-slate-600 border-slate-200",
+};
+const STATUS_DOT: Record<RequestStatus, string> = {
+  New: "bg-navy-500",
+  "Under Review": "bg-violet-500",
+  Assigned: "bg-amber-500",
+  "In Progress": "bg-sky-500",
+  Resolved: "bg-sage-500",
+  Closed: "bg-slate-400",
+};
+export function StatusBadge({ status, className }: { status: RequestStatus; className?: string }) {
+  return (
+    <span className={cn("inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-2 py-0.5 text-xs font-medium", STATUS_STYLE[status], className)}>
+      <span className={cn("h-1.5 w-1.5 rounded-full", STATUS_DOT[status])} />
+      {status}
+    </span>
+  );
+}
+
+const PRIORITY_STYLE: Record<Priority, string> = {
+  Low: "text-slate-600 bg-slate-50 border-slate-200",
+  Medium: "text-navy-600 bg-navy-50 border-navy-100",
+  High: "text-amber-700 bg-amber-50 border-amber-200",
+  Urgent: "text-red-700 bg-red-50 border-red-200",
+};
+export function PriorityBadge({ priority }: { priority: Priority }) {
+  return (
+    <span className={cn("inline-flex items-center gap-1 whitespace-nowrap rounded-md border px-1.5 py-0.5 text-xs font-medium", PRIORITY_STYLE[priority])}>
+      {priority === "Urgent" && <AlertTriangle className="h-3 w-3" />}
+      {priority}
+    </span>
+  );
+}
+
+/* ---------- Category ---------- */
+export const CATEGORY_META: Record<IssueCategory, { icon: LucideIcon; color: string; chart: string }> = {
+  Plumbing: { icon: Droplets, color: "text-sky-700 bg-sky-50", chart: "#3b82c4" },
+  Electrical: { icon: Zap, color: "text-amber-700 bg-amber-50", chart: "#e0a43a" },
+  Roofing: { icon: Home, color: "text-orange-800 bg-orange-50", chart: "#b4643a" },
+  HVAC: { icon: Thermometer, color: "text-rose-700 bg-rose-50", chart: "#c95a6a" },
+  Structural: { icon: Building2, color: "text-stone-700 bg-stone-100", chart: "#7c6f64" },
+  "Pest Control": { icon: Bug, color: "text-lime-800 bg-lime-50", chart: "#6f9a3b" },
+  Appliances: { icon: Refrigerator, color: "text-indigo-700 bg-indigo-50", chart: "#5a63c4" },
+  "General Maintenance": { icon: Wrench, color: "text-sage-700 bg-sage-50", chart: "#567f62" },
+};
+
+export function CategoryIcon({ category, className }: { category: IssueCategory; className?: string }) {
+  const M = CATEGORY_META[category];
+  return (
+    <span className={cn("grid h-8 w-8 shrink-0 place-items-center rounded-md", M.color, className)}>
+      <M.icon className="h-4 w-4" />
+    </span>
+  );
+}
+export function CategoryLabel({ category }: { category: IssueCategory }) {
+  const M = CATEGORY_META[category];
+  return (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-sm">
+      <M.icon className={cn("h-3.5 w-3.5", M.color.split(" ")[0])} />
+      {category}
+    </span>
+  );
+}
+
+/* ---------- Simulated AI marker ---------- */
+export function AIBadge({ label = "Simulated AI", className }: { label?: string; className?: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className={cn("inline-flex cursor-help items-center gap-1 rounded-full border border-violet-200 bg-violet-50 px-2 py-0.5 text-[11px] font-semibold text-violet-700", className)}>
+          <Sparkles className="h-3 w-3" />
+          {label}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent>
+        Demonstration output from DwellMender's simulated AI layer. In production this is generated by Amazon Bedrock / Textract and always requires manager review.
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+export function DemoBadge({ className }: { className?: string }) {
+  return (
+    <Badge variant="outline" className={cn("border-dashed text-[10px] uppercase tracking-wide text-muted-foreground", className)}>
+      Demo record
+    </Badge>
+  );
+}
+
+/* ---------- Photo placeholder tile ---------- */
+const PHOTO_STYLE: Record<PhotoKind, { icon: LucideIcon; bg: string }> = {
+  water: { icon: Droplets, bg: "from-sky-200 via-sky-100 to-slate-200" },
+  crack: { icon: Hammer, bg: "from-stone-300 via-stone-200 to-stone-100" },
+  electrical: { icon: Plug, bg: "from-amber-200 via-amber-100 to-slate-200" },
+  roof: { icon: Home, bg: "from-orange-200 via-stone-200 to-sky-100" },
+  pest: { icon: Bug, bg: "from-lime-200 via-stone-200 to-stone-100" },
+  appliance: { icon: Refrigerator, bg: "from-indigo-100 via-slate-100 to-slate-200" },
+  mould: { icon: AlertTriangle, bg: "from-stone-400/60 via-stone-200 to-sage-100" },
+  heating: { icon: Flame, bg: "from-rose-200 via-orange-100 to-slate-100" },
+  general: { icon: ImageIcon, bg: "from-slate-200 via-slate-100 to-warm-200" },
+};
+
+export function PhotoTile({ photo, className, showCaption = true }: { photo: Photo; className?: string; showCaption?: boolean }) {
+  const S = PHOTO_STYLE[photo.kind];
+  return (
+    <figure className={cn("group relative overflow-hidden rounded-lg border bg-muted", className)}>
+      {photo.url ? (
+        <img src={photo.url} alt={photo.caption} className="aspect-[4/3] h-full w-full object-cover" />
+      ) : (
+        <div className={cn("relative grid aspect-[4/3] place-items-center bg-gradient-to-br", S.bg)}>
+          <div className="absolute inset-0 opacity-30 bg-grid" />
+          <S.icon className="relative h-8 w-8 text-navy-900/40" />
+          <span className="absolute left-1.5 top-1.5 rounded bg-white/70 px-1 text-[9px] font-medium uppercase tracking-wide text-navy-700">Sample photo</span>
+        </div>
+      )}
+      {showCaption && <figcaption className="truncate border-t bg-card px-2 py-1 text-[11px] text-muted-foreground">{photo.caption}</figcaption>}
+    </figure>
+  );
+}
+
+/* ---------- Layout helpers ---------- */
+export function PageHeader({ title, description, actions, eyebrow }: { title: string; description?: ReactNode; actions?: ReactNode; eyebrow?: ReactNode }) {
+  return (
+    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="min-w-0">
+        {eyebrow && <div className="mb-1.5">{eyebrow}</div>}
+        <h1 className="text-2xl font-bold text-navy-900">{title}</h1>
+        {description && <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{description}</p>}
+      </div>
+      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+    </div>
+  );
+}
+
+export function StatCard({
+  label,
+  value,
+  icon: Icon,
+  hint,
+  tone = "navy",
+  onClick,
+}: {
+  label: string;
+  value: ReactNode;
+  icon: LucideIcon;
+  hint?: ReactNode;
+  tone?: "navy" | "sage" | "amber" | "red" | "violet" | "sky";
+  onClick?: () => void;
+}) {
+  const tones = {
+    navy: "bg-navy-50 text-navy-700",
+    sage: "bg-sage-50 text-sage-700",
+    amber: "bg-amber-50 text-amber-700",
+    red: "bg-red-50 text-red-700",
+    violet: "bg-violet-50 text-violet-700",
+    sky: "bg-sky-50 text-sky-700",
+  };
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={!onClick}
+      className="group flex flex-col rounded-lg border bg-card p-4 text-left shadow-card transition enabled:hover:-translate-y-0.5 enabled:hover:shadow-lift disabled:cursor-default"
+    >
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium text-muted-foreground">{label}</span>
+        <span className={cn("grid h-8 w-8 place-items-center rounded-md", tones[tone])}>
+          <Icon className="h-4 w-4" />
+        </span>
+      </div>
+      <div className="mt-2 font-display text-2xl font-bold text-navy-900">{value}</div>
+      {hint && <div className="mt-1 text-xs text-muted-foreground">{hint}</div>}
+    </button>
+  );
+}
+
+export function EmptyState({ icon: Icon, title, description, action }: { icon: LucideIcon; title: string; description?: string; action?: ReactNode }) {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-warm-50 px-6 py-12 text-center">
+      <span className="grid h-11 w-11 place-items-center rounded-full bg-secondary">
+        <Icon className="h-5 w-5 text-muted-foreground" />
+      </span>
+      <h3 className="mt-3 font-semibold">{title}</h3>
+      {description && <p className="mt-1 max-w-sm text-sm text-muted-foreground">{description}</p>}
+      {action && <div className="mt-4">{action}</div>}
+    </div>
+  );
+}
+
+export function ScoreRing({ score, size = 56 }: { score: number; size?: number }) {
+  const r = (size - 8) / 2;
+  const c = 2 * Math.PI * r;
+  const color = score >= 85 ? "#43654d" : score >= 70 ? "#c98623" : "#7e97c2";
+  return (
+    <div className="relative grid place-items-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} stroke="hsl(var(--secondary))" strokeWidth={6} fill="none" />
+        <circle cx={size / 2} cy={size / 2} r={r} stroke={color} strokeWidth={6} fill="none" strokeDasharray={c} strokeDashoffset={c * (1 - score / 100)} strokeLinecap="round" />
+      </svg>
+      <span className="absolute font-display text-sm font-bold text-navy-900">{score}%</span>
+    </div>
+  );
+}
+
+export function ConfidenceBar({ value }: { value: number }) {
+  const pct = Math.round(value * 100);
+  const color = pct >= 85 ? "bg-sage-500" : pct >= 70 ? "bg-amber-400" : "bg-red-400";
+  return (
+    <div className="flex items-center gap-2">
+      <div className="h-1.5 w-16 overflow-hidden rounded-full bg-secondary">
+        <div className={cn("h-full rounded-full", color)} style={{ width: `${pct}%` }} />
+      </div>
+      <span className="text-xs tabular-nums text-muted-foreground">{pct}%</span>
+    </div>
+  );
+}

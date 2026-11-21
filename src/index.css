@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 218 54% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 218 54% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 218 54% 16%;
+    --primary: 218 54% 16%;
+    --primary-foreground: 40 50% 97%;
+    --secondary: 36 30% 93%;
+    --secondary-foreground: 218 54% 16%;
+    --muted: 36 20% 94%;
+    --muted-foreground: 218 14% 44%;
+    --accent: 134 16% 92%;
+    --accent-foreground: 136 20% 26%;
+    --destructive: 2 64% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 18% 87%;
+    --input: 36 18% 85%;
+    --ring: 136 18% 42%;
+    --radius: 0.65rem;
+  }
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  /* let grid columns shrink below their content's min width (prevents horizontal overflow on phones) */
+  .grid > * { min-width: 0; }
+  body { @apply bg-background text-foreground antialiased; font-feature-settings: "cv11", "ss01"; }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-image: linear-gradient(to right, rgba(19,35,63,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(19,35,63,0.05) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(19,35,63,0.15); border-radius: 8px; }
+}
