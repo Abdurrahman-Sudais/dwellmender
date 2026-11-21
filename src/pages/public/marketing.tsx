@@ -50,7 +50,7 @@ export function CTABand({ title = "See your recurring problems before your tenan
           <div className="flex flex-wrap gap-3">
             <Button size="lg" variant="amber" asChild>
               <Link to="/register">
-                Start free trial <ArrowRight />
+                Request a demo <ArrowRight />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10" asChild>

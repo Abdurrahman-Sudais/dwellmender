@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { PageSkeleton } from "@/components/PageSkeleton";
+import { useFlow } from "@/kit/flow";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/shared";
@@ -17,6 +18,8 @@ const NAV = [
 ];
 
 export function PublicLayout() {
+  const flowLoc = useLocation();
+  useFlow(flowLoc.pathname + flowLoc.hash);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const { user } = useStore();
@@ -54,7 +57,7 @@ export function PublicLayout() {
                   <Link to="/login">Log in</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/register">Start free trial</Link>
+                  <Link to="/#demo">Request a demo</Link>
                 </Button>
               </>
             )}
@@ -76,7 +79,7 @@ export function PublicLayout() {
                   <Link to="/login">Log in</Link>
                 </Button>
                 <Button className="flex-1" asChild>
-                  <Link to="/register">Start free trial</Link>
+                  <Link to="/#demo">Request a demo</Link>
                 </Button>
               </div>
             </div>

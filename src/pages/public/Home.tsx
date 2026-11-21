@@ -1,3 +1,6 @@
+import { Cycle, Marquee, Stats, Words } from "@/kit/Flow";
+import { AwsSection, ProgressAndDemo } from "@/kit/Sections";
+import { SITE } from "@/kit/site";
 import { Link } from "react-router-dom";
 import { ArrowRight, Building2, ClipboardCheck, Copy, FileText, GraduationCap, Hospital, Layers, PoundSterling, Repeat, ShieldCheck, Sparkles, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,23 +18,24 @@ export default function Home() {
               <span className="h-1.5 w-1.5 rounded-full bg-sage-500" /> Maintenance intelligence for property teams
             </div>
             <h1 className="mt-6 text-4xl font-extrabold leading-[1.07] text-navy-900 sm:text-5xl lg:text-[3.4rem]">
-              Stop Treating the Same Property Problem as a New Complaint.
+              <Words>Stop treating the same property problem as a new complaint.</Words>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-600">
               DwellMender connects tenant reports, contractor records, and maintenance histories to help property managers identify recurring issues and make better repair decisions.
             </p>
+            <p className="mt-4 text-base text-navy-600"><Cycle lead="Built for" items={SITE.cycle} accent="text-violet-700" /></p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button size="lg" asChild>
-                <Link to="/register">
-                  Start free trial <ArrowRight />
-                </Link>
+                <a href="#demo">
+                  Request a demo <ArrowRight />
+                </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link to="/login">Explore the live demo</Link>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-navy-600">
-              {["No card required", "Human approval on every AI suggestion", "Built on AWS"].map((t) => (
+              {["Fictional demo data", "Human approval on every AI suggestion", "Planned on AWS"].map((t) => (
                 <span key={t} className="inline-flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-sage-600" /> {t}
                 </span>
@@ -41,6 +45,9 @@ export default function Home() {
           <ProductPreview />
         </div>
       </section>
+
+      <Marquee items={SITE.marquee} label={`What ${SITE.name} is built for`} />
+      <Stats items={SITE.stats} />
 
       {/* Problem strip */}
       <section className="border-y border-warm-300/70 bg-white">
@@ -163,6 +170,10 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      <AwsSection />
+
+      <ProgressAndDemo />
 
       <CTABand />
     </>

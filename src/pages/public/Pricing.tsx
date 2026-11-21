@@ -35,7 +35,7 @@ export default function Pricing() {
   const [annual, setAnnual] = useState(true);
   return (
     <>
-      <PageHero eyebrow="Pricing" title="Simple pricing that scales with your portfolio." text="Every plan includes unlimited users and a 14-day free trial with the full demo workspace.">
+      <PageHero eyebrow="Pricing" title="Simple pricing that scales with your portfolio." text="Every plan includes unlimited users. Pricing is illustrative for a proposed product; start with a demo on fictional data.">
         <div className="mt-8 inline-flex items-center gap-3 rounded-full border bg-white px-4 py-2 text-sm">
           <span className={cn(!annual && "font-semibold text-navy-900")}>Monthly</span>
           <Switch checked={annual} onCheckedChange={setAnnual} aria-label="Toggle annual billing" />
@@ -73,7 +73,7 @@ export default function Pricing() {
                 ))}
               </ul>
               <Button className="mt-8" variant={p.featured ? "default" : "outline"} asChild>
-                <Link to={p.monthly ? "/register" : "/contact"}>{p.monthly ? "Start free trial" : "Talk to sales"}</Link>
+                <Link to={p.monthly ? "/#demo" : "/contact"}>{p.monthly ? "Request a demo" : "Talk to sales"}</Link>
               </Button>
             </div>
           ))}
